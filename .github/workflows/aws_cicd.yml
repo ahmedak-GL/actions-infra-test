@@ -47,11 +47,11 @@ jobs:
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      run: terraform -chdir=cloud/AWS/dev apply -auto-approve
+    # - name: Terraform Apply
+    #   run: terraform -chdir=cloud/AWS/dev apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/AWS/dev destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform -chdir=cloud/AWS/dev destroy -auto-approve
 
 
   stage-deploy:
@@ -95,11 +95,11 @@ jobs:
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      run: terraform -chdir=cloud/AWS/stage apply -auto-approve
+    # - name: Terraform Apply
+    #   run: terraform -chdir=cloud/AWS/stage apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/AWS/stage destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform -chdir=cloud/AWS/stage destroy -auto-approve
 
 
   prod-deploy:
@@ -143,11 +143,11 @@ jobs:
 
     #  On push to main, build or change infrastructure according to Terraform configuration files
     #  Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      run: terraform -chdir=cloud/AWS/prod apply -auto-approve
+    # - name: Terraform Apply
+    #   run: terraform -chdir=cloud/AWS/prod apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/AWS/prod destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform -chdir=cloud/AWS/prod destroy -auto-approve
 
 
 

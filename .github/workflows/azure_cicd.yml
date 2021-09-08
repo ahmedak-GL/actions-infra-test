@@ -1,144 +1,144 @@
-name: 'azure-cicd'
+# name: 'azure-cicd'
 
-on:
-  push:
-    branches:
-    - ahmedak01-dev/test1
-  pull_request:
+# on:
+#   push:
+#     branches:
+#     - ahmedak01-dev/test1
+#   pull_request:
 
-jobs:
-  dev-deploy:
-    name: 'azure-dev-cicd'
-    runs-on: ubuntu-latest
-    environment: development
+# jobs:
+#   dev-deploy:
+#     name: 'azure-dev-cicd'
+#     runs-on: ubuntu-latest
+#     environment: development
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#     defaults:
+#       run:
+#         shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
+#     steps:
+#     # Checkout the repository to the GitHub Actions runner
+#     - name: Checkout
+#       uses: actions/checkout@v2
 
-    - name: Configure Azure Credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#     - name: Configure Azure Credentials
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
- # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform -chdir=cloud/Azure/dev init
+#  # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+#     - name: Terraform Init
+#       run: terraform -chdir=cloud/Azure/dev init
     
-    # Terraform Format
-    - name: Terraform Format
-      run: terraform -chdir=cloud/Azure/dev fmt
+#     # Terraform Format
+#     - name: Terraform Format
+#       run: terraform -chdir=cloud/Azure/dev fmt
 
-     # Terraform Validate
-    - name: Terraform Validate
-      run: terraform -chdir=cloud/Azure/dev validate
+#      # Terraform Validate
+#     - name: Terraform Validate
+#       run: terraform -chdir=cloud/Azure/dev validate
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform -chdir=cloud/Azure/dev plan
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan
+#       run: terraform -chdir=cloud/Azure/dev plan
 
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    # - name: Terraform Apply
-    #   run: terraform -chdir=cloud/Azure/dev apply -auto-approve
+#       # On push to main, build or change infrastructure according to Terraform configuration files
+#       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+#     # - name: Terraform Apply
+#     #   run: terraform -chdir=cloud/Azure/dev apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/Azure/dev destroy -auto-approve
+#     # - name: Terraform Destroy
+#     #   run: terraform -chdir=cloud/Azure/dev destroy -auto-approve
 
 
-  stage-deploy:
-    name: 'azure-stage-cicd'
-    runs-on: ubuntu-latest
-    environment: staging
-    needs: dev-deploy
+#   stage-deploy:
+#     name: 'azure-stage-cicd'
+#     runs-on: ubuntu-latest
+#     environment: staging
+#     needs: dev-deploy
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#     defaults:
+#       run:
+#         shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
+#     steps:
+#     # Checkout the repository to the GitHub Actions runner
+#     - name: Checkout
+#       uses: actions/checkout@v2
 
-    - name: Configure Azure Credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#     - name: Configure Azure Credentials
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
- # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform -chdir=cloud/Azure/stage init
+#  # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+#     - name: Terraform Init
+#       run: terraform -chdir=cloud/Azure/stage init
     
-    # Terraform Format
-    - name: Terraform Format
-      run: terraform -chdir=cloud/Azure/stage fmt
+#     # Terraform Format
+#     - name: Terraform Format
+#       run: terraform -chdir=cloud/Azure/stage fmt
 
-     # Terraform Validate
-    - name: Terraform Validate
-      run: terraform -chdir=cloud/Azure/stage validate
+#      # Terraform Validate
+#     - name: Terraform Validate
+#       run: terraform -chdir=cloud/Azure/stage validate
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform -chdir=cloud/Azure/stage plan
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan
+#       run: terraform -chdir=cloud/Azure/stage plan
 
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    # - name: Terraform Apply
-    #   run: terraform -chdir=cloud/Azure/stage apply -auto-approve
+#       # On push to main, build or change infrastructure according to Terraform configuration files
+#       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+#     # - name: Terraform Apply
+#     #   run: terraform -chdir=cloud/Azure/stage apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/Azure/stage destroy -auto-approve
+#     # - name: Terraform Destroy
+#     #   run: terraform -chdir=cloud/Azure/stage destroy -auto-approve
 
 
-  prod-deploy:
-    name: 'azure-prod-cicd'
-    runs-on: ubuntu-latest
-    environment: production
-    needs: stage-deploy
+#   prod-deploy:
+#     name: 'azure-prod-cicd'
+#     runs-on: ubuntu-latest
+#     environment: production
+#     needs: stage-deploy
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#     defaults:
+#       run:
+#         shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
+#     steps:
+#     # Checkout the repository to the GitHub Actions runner
+#     - name: Checkout
+#       uses: actions/checkout@v2
 
-    - name: Configure Azure Credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#     - name: Configure Azure Credentials
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform -chdir=cloud/Azure/prod init
+#     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+#     - name: Terraform Init
+#       run: terraform -chdir=cloud/Azure/prod init
     
-    # Terraform Format
-    - name: Terraform Format
-      run: terraform -chdir=cloud/Azure/prod fmt
+#     # Terraform Format
+#     - name: Terraform Format
+#       run: terraform -chdir=cloud/Azure/prod fmt
 
-     # Terraform Validate
-    - name: Terraform Validate
-      run: terraform -chdir=cloud/Azure/prod validate
+#      # Terraform Validate
+#     - name: Terraform Validate
+#       run: terraform -chdir=cloud/Azure/prod validate
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform -chdir=cloud/Azure/prod plan
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan
+#       run: terraform -chdir=cloud/Azure/prod plan
 
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    # - name: Terraform Apply
-    #   run: terraform -chdir=cloud/Azure/prod apply -auto-approve
+#       # On push to main, build or change infrastructure according to Terraform configuration files
+#       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+#     # - name: Terraform Apply
+#     #   run: terraform -chdir=cloud/Azure/prod apply -auto-approve
 
-    # - name: Terraform Destroy
-    #   run: terraform -chdir=cloud/Azure/prod destroy -auto-approve
+#     # - name: Terraform Destroy
+#     #   run: terraform -chdir=cloud/Azure/prod destroy -auto-approve
